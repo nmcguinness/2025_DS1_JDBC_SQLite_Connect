@@ -47,12 +47,12 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
 2. **Create a New Project**
    - Click on "File" > "New Project" (or use Ctrl+Shift+N)
    - In the Categories panel, select "Java"
-   - In the Projects panel, select "Java with Maven" (as Java Application is not available)
+   - In the Projects panel, select "Java with Maven" (if Java Application is not available)
    - Click "Next"
 
 3. **Configure Maven Project**
-   - Enter a Project Name (e.g., "SQLiteJDBCProject")
-   - Set the Group ID (e.g., "com.yourdomain")
+   - Enter a Project Name (e.g., "DBS1_GCA_Stage3")
+   - Set the Group ID (e.g., "com.dbs1")
    - Set the Version (leave as default "1.0-SNAPSHOT")
    - Choose a Project Location (where you want to save the project)
    - Click "Next"
@@ -74,18 +74,6 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
    ```
    - Save the `pom.xml` file
    - Right-click on the project and select "Clean and Build" to download the dependency
-
-```mermaid
-flowchart TD
-    A[Launch NetBeans] --> B[File > New Project]
-    B --> C[Select Java with Maven]
-    C --> D[Configure Maven Project]
-    D --> E[Set Project Name & Group ID]
-    E --> F[Finish Project Creation]
-    F --> G[Open pom.xml]
-    G --> H[Add SQLite JDBC Dependency]
-    H --> I[Save and Clean and Build]
-```
 
 ### Creating the Package and Java Files
 
@@ -184,7 +172,7 @@ To verify your SQLite connection in NetBeans:
    - Type "Java: Create Java Project" and select it
    - Select "No build tools" for a simple project
    - Choose a location for your project
-   - Enter a project name (e.g., "SQLiteJDBCProject")
+   - Enter a project name (e.g., "DBS1_GCA_Stage3")
 
 3. **Create the Package Structure**
    - Open the Explorer view (Ctrl+Shift+E)
