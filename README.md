@@ -375,30 +375,28 @@ If your program connects but queries don't work:
 
 For Stage 3, maintain this structure:
 
-```mermaid
-flowchart TD
-    P[Project Root] --> S[src]
-    P --> D[db]
-    P --> SQL[sql]
-    P --> DOC[docs]
-    P --> LIB[lib]
-    
-    S --> CP[connecttojdbc package]
-    CP --> DBC[DBConnect.java]
-    CP --> DBCMD[DBCommand.java]
-    CP --> DBOF[DBOutputFormatter.java]
-    CP --> M[Main.java]
-    
-    D --> DB[database.sqlite]
-    
-    SQL --> SCH[schema.sql]
-    SQL --> POP[populate.sql]
-    SQL --> Q[queries.sql]
-    
-    DOC --> RPT[group_number_GCA_Stage3_Report.pdf]
-    
-    LIB --> SQLJDBC[sqlite-jdbc-3.40.0.0.jar]
-```
+project_root/
+│
+├── src/
+│   └── connecttojdbc/
+│       ├── DBConnect.java
+│       ├── DBCommand.java
+│       ├── DBOutputFormatter.java
+│       └── Main.java
+│
+├── db/
+│   └── database.sqlite
+│
+├── sql/
+│   ├── schema.sql
+│   ├── populate.sql
+│   └── queries.sql
+│
+├── docs/
+│   └── group_number_GCA_Stage3_Report.pdf
+│
+└── lib/
+    └── sqlite-jdbc-3.40.0.0.jar
 
 ## Database Conversion Guide
 
