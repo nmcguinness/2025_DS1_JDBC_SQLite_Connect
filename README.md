@@ -63,14 +63,19 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
 
 5. **Add SQLite Dependency to pom.xml**
    - Open the `pom.xml` file in your project
-   - Find the `<dependencies>` section (or create it if it doesn't exist)
+   - You need to add a <dependencies> section between the closing </properties> tag and the closing </project> tag:
    - Add the SQLite JDBC dependency:
    ```xml
-   <dependency>
-     <groupId>org.xerial</groupId>
-     <artifactId>sqlite-jdbc</artifactId>
-     <version>3.40.0.0</version>
-   </dependency>
+    </properties>      
+        <dependencies>
+            <!-- Add SQLite JDBC dependency here -->
+            <dependency>
+                <groupId>org.xerial</groupId>
+                <artifactId>sqlite-jdbc</artifactId>
+                <version>3.40.0.0</version>
+            </dependency>
+        </dependencies>     
+    </project>
    ```
    - Save the `pom.xml` file
    - Right-click on the project and select "Clean and Build" to download the dependency
