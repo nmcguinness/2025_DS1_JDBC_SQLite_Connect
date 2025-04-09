@@ -1,4 +1,4 @@
-# SQLite Integration Guide for Database Systems Project
+# SQLite Integration Guide for Database Systems 1 - GCA Project
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -83,7 +83,20 @@ Note: This structure follows Maven conventions. If using a non-Maven project, yo
     </project>
    ```
    - Save the `pom.xml` file
-   - In NetBeans IDE, right-click on your project name in the Projects panel (usually located on the left side of the screen). From the context menu that appears, select the option "Clean and Build"
+
+6. **Clean and Build to Download Dependencies**
+   - In NetBeans IDE, right-click on your project name in the Projects panel (usually located on the left side of the screen)
+   - From the context menu that appears, select the option "Clean and Build"
+   - This critical step does several important things:
+     - Downloads the SQLite JDBC driver from Maven repositories
+     - Compiles all your Java source files
+     - Creates compiled class files in the target directory
+     - Prepares your application for execution
+   - If this step fails, check the Output window for error messages
+   - Common issues include:
+     - Internet connectivity problems preventing dependency downloads
+     - Syntax errors in your pom.xml file
+     - Permissions issues with your project directory
 
 ### Creating the Package and Java Files
 
@@ -105,6 +118,19 @@ Note: This structure follows Maven conventions. If using a non-Maven project, yo
    - Right-click on "Other Sources" > "src/main/resources"
    - Select "New" > "Folder"
    - Create folders named `db`, `sql`, and `docs`
+
+4. **Set the Main Class**
+   - Right-click on your project and select "Properties"
+   - Go to the "Run" category
+   - In the "Main Class" field, browse for or type `connecttojdbc.Main`
+   - This ensures NetBeans knows which class contains the main method to run
+   - Click "OK" to save these changes
+
+5. **Clean and Build Again After Setting the Main Class**
+   - Right-click on your project
+   - Select "Clean and Build" to ensure all settings are properly recognized
+   - This step is crucial to avoid the "Error: Could not find or load main class" error
+   - The Output window should show "BUILD SUCCESS" when complete
 
 ### Testing in NetBeans
 
@@ -331,6 +357,48 @@ DBConnect.disconnect(conn);
 ```
 
 ## Common Issues and Solutions
+
+### "Could not find or load main class" Error
+
+If you see "Error: Could not find or load main class" or "ClassNotFoundException":
+
+1. **Verify Main Class Configuration**:
+   - Right-click your project and select "Properties"
+   - Go to "Run" category
+   - Check that the Main Class field contains the correct class name
+     - If using the provided structure, it should be `connecttojdbc.Main`
+     - The package name must match your file structure
+   - Click "OK" to save changes
+
+2. **Check Package Declaration**:
+   - Open your Main.java file
+   - Ensure it has the correct package declaration at the top:
+     ```java
+     package connecttojdbc;  // Must match folder structure
+     ```
+   - Verify that the class is named `Main` with proper capitalization
+   - Check that it includes a proper main method:
+     ```java
+     public static void main(String[] args) {
+         // Your code here
+     }
+     ```
+
+3. **Perform Clean and Build Again**:
+   - Right-click on your project in the Projects panel
+   - Select "Clean and Build"
+   - This rebuilds all class files and ensures configuration changes take effect
+   - Watch the Output window for any compilation errors
+
+4. **Run Project (Not File)**:
+   - Use "Run Project" (F6) instead of "Run File"
+   - This uses the project's main class configuration
+
+5. **If Problem Persists**:
+   - Try running via direct main class specification:
+     - Right-click on Main.java
+     - Select "Run File"
+     - This bypasses project configuration
 
 ### Database File Not Found
 
