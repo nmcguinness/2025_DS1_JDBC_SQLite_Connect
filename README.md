@@ -46,19 +46,51 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
 
 2. **Create a New Project**
    - Click on "File" > "New Project" (or use Ctrl+Shift+N)
-   - Select "Java" > "Java Application" 
+   - In the Categories panel, select "Java"
+   - In the Projects panel, select "Java with Maven" (as Java Application is not available)
    - Click "Next"
 
-3. **Configure Project**
+3. **Configure Maven Project**
    - Enter a Project Name (e.g., "SQLiteJDBCProject")
+   - Set the Group ID (e.g., "com.yourdomain")
+   - Set the Version (leave as default "1.0-SNAPSHOT")
    - Choose a Project Location (where you want to save the project)
-   - Make sure to uncheck "Create Main Class" (we'll create this ourselves)
+   - Click "Next"
+
+4. **Maven Settings**
+   - Leave the Maven settings as default
    - Click "Finish"
+
+5. **Add SQLite Dependency to pom.xml**
+   - Open the `pom.xml` file in your project
+   - Find the `<dependencies>` section (or create it if it doesn't exist)
+   - Add the SQLite JDBC dependency:
+   ```xml
+   <dependency>
+     <groupId>org.xerial</groupId>
+     <artifactId>sqlite-jdbc</artifactId>
+     <version>3.40.0.0</version>
+   </dependency>
+   ```
+   - Save the `pom.xml` file
+   - Right-click on the project and select "Clean and Build" to download the dependency
+
+```mermaid
+flowchart TD
+    A[Launch NetBeans] --> B[File > New Project]
+    B --> C[Select Java with Maven]
+    C --> D[Configure Maven Project]
+    D --> E[Set Project Name & Group ID]
+    E --> F[Finish Project Creation]
+    F --> G[Open pom.xml]
+    G --> H[Add SQLite JDBC Dependency]
+    H --> I[Save and Clean and Build]
+```
 
 ### Creating the Package and Java Files
 
 1. **Create a Package**
-   - Right-click on "Source Packages" in your project
+   - Right-click on "Source Packages" (or "src/main/java") in your project
    - Select "New" > "Java Package"
    - Name the package `connecttojdbc`
    - Click "Finish"
@@ -71,24 +103,12 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
    - For each class, copy and paste the code from the provided files
 
 3. **Create Project Folders**
-   - Right-click on your project name
+   - For Maven projects, resources should be stored in `src/main/resources`
+   - Right-click on "Other Sources" > "src/main/resources"
    - Select "New" > "Folder"
    - Create folders named `db`, `sql`, and `docs`
 
-### Adding the Driver to NetBeans
-
-1. **Download the SQLite JDBC Driver**
-   - Visit the [SQLite JDBC GitHub releases page](https://github.com/xerial/sqlite-jdbc/releases)
-   - Download the latest JAR file (e.g., `sqlite-jdbc-3.40.0.0.jar`)
-
-2. **Add Driver to Project**
-   - Right-click on your project in the Projects window
-   - Select "Properties"
-   - Go to "Libraries" > "Compile" tab
-   - Click "Add JAR/Folder" and locate the downloaded SQLite JDBC driver JAR file
-   - Click "Open" and then "OK"
-
-#### Testing in NetBeans
+### Testing in NetBeans
 
 To verify your SQLite connection in NetBeans:
 
@@ -377,28 +397,28 @@ For Stage 3, maintain this structure:
 
 ```
 project_root/
-│
-├── src/
-│   └── connecttojdbc/
-│       ├── DBConnect.java
-│       ├── DBCommand.java
-│       ├── DBOutputFormatter.java
-│       └── Main.java
-│
-├── db/
-│   └── database.sqlite
-│
-├── sql/
-│   ├── schema.sql
-│   ├── populate.sql
-│   └── queries.sql
-│
-├── docs/
-│   └── group_number_GCA_Stage3_Report.pdf
-│
-└── lib/
-    └── sqlite-jdbc-3.40.0.0.jar
+  ├── src/
+  │   └── main/
+  │       ├── java/
+  │       │   └── connecttojdbc/
+  │       │       ├── DBConnect.java
+  │       │       ├── DBCommand.java
+  │       │       ├── DBOutputFormatter.java
+  │       │       └── Main.java
+  │       └── resources/
+  │           ├── db/
+  │           │   └── database.sqlite
+  │           ├── sql/
+  │           │   ├── schema.sql
+  │           │   ├── populate.sql
+  │           │   └── queries.sql
+  │           └── docs/
+  │               └── group_number_GCA_Stage3_Report.pdf
+  ├── pom.xml
+  └── target/
 ```
+
+Note: This structure follows Maven conventions. If using a non-Maven project, your structure will be simpler as shown in the VSCode section.
 
 ## Database Conversion Guide
 
@@ -430,4 +450,3 @@ After creating your database in PHPMyAdmin:
    - Try running some test queries in the "Execute SQL" tab
 
    ![DB Browser for SQLite](https://i.imgur.com/CSLEbRN.png)
-
