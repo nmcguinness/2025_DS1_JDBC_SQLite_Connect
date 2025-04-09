@@ -398,6 +398,7 @@ project_root/
 └── lib/
     └── sqlite-jdbc-3.40.0.0.jar
 
+
 ## Database Conversion Guide
 
 ### Converting MySQL to SQLite
