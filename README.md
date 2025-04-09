@@ -63,7 +63,7 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
 
 5. **Add SQLite Dependency to pom.xml**
    - Open the `pom.xml` file in your project
-   - You need to add a <dependencies> section between the closing </properties> tag and the closing </project> tag:
+   - You need to add a `<dependencies>` section between the closing `</properties>` tag and the closing `</project>` tag:
    - Add the SQLite JDBC dependency:
    ```xml
     </properties>      
