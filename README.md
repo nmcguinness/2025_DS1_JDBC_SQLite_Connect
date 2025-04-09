@@ -47,20 +47,6 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
 4. Click "Add JAR/Folder" and locate the downloaded SQLite JDBC driver JAR file
 5. Click "Open" and then "OK"
 
-```mermaid
-flowchart TD
-    A[Start] --> B[Download SQLite JDBC Driver]
-    B --> C[Open NetBeans Project]
-    C --> D[Right-click Project]
-    D --> E[Select Properties]
-    E --> F[Go to Libraries]
-    F --> G[Click Add JAR/Folder]
-    G --> H[Select SQLite JDBC JAR]
-    H --> I[Click Open]
-    I --> J[Click OK]
-    J --> K[Driver Added Successfully]
-```
-
 ### Testing in NetBeans
 
 To verify your SQLite connection in NetBeans:
