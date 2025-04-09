@@ -375,6 +375,7 @@ If your program connects but queries don't work:
 
 For Stage 3, maintain this structure:
 
+```
 project_root/
 │
 ├── src/
@@ -397,7 +398,7 @@ project_root/
 │
 └── lib/
     └── sqlite-jdbc-3.40.0.0.jar
-
+```
 
 ## Database Conversion Guide
 
