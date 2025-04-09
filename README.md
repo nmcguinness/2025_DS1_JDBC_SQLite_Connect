@@ -78,7 +78,8 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
     </project>
    ```
    - Save the `pom.xml` file
-   - Right-click on the project and select "Clean and Build" to download the dependency
+   - In NetBeans IDE, right-click on your project name in the `Projects` panel (usually located on the left side of the screen). 
+   - From the context menu that appears, select the option `Clean and Build`
 
 ### Creating the Package and Java Files
 
