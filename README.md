@@ -2,40 +2,45 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
-- [Project Requirements](#project-requirements)
-- [Setting Up SQLite](#setting-up-sqlite)
+- [Project Structure Overview](#project-structure-overview)
 - [NetBeans Integration Guide](#netbeans-integration-guide)
 - [VSCode Integration Guide](#vscode-integration-guide)
 - [Working with SQLite in Java](#working-with-sqlite-in-java)
 - [Common Issues and Solutions](#common-issues-and-solutions)
-- [Project Structure Overview](#project-structure-overview)
 - [Database Conversion Guide](#database-conversion-guide)
 
 ## Introduction
 
 This guide provides step-by-step instructions for integrating SQLite with your Java application for Stage 3 of the Database Systems Project. It includes detailed setup instructions for both NetBeans and VSCode environments, specifically designed for first-year students who are new to Java and database connectivity.
 
-## Project Requirements
+## Project Structure Overview
 
-Stage 3 requires you to:
-1. Implement your final 3NF schema in SQLite
-2. Develop 10 advanced SQL queries
-3. Build a Java application using JDBC to execute those queries
-4. Document everything in a comprehensive report
+For Stage 3, maintain this structure:
 
-## Setting Up SQLite
+```
+project_root/
+  ├── src/
+  │   └── main/
+  │       ├── java/
+  │       │   └── connecttojdbc/
+  │       │       ├── DBConnect.java
+  │       │       ├── DBCommand.java
+  │       │       ├── DBOutputFormatter.java
+  │       │       └── Main.java
+  │       └── resources/
+  │           ├── db/
+  │           │   └── database.sqlite
+  │           ├── sql/
+  │           │   ├── schema.sql
+  │           │   ├── populate.sql
+  │           │   └── queries.sql
+  │           └── docs/
+  │               └── group_number_GCA_Stage3_Report.pdf
+  ├── pom.xml
+  └── target/
+```
 
-### SQLite JDBC Driver
-
-Before connecting to SQLite, you need to add the SQLite JDBC driver to your project:
-
-1. **Download the SQLite JDBC Driver**
-   - Visit: [https://github.com/xerial/sqlite-jdbc/releases](https://github.com/xerial/sqlite-jdbc/releases)
-   - Download the latest JAR file (e.g., `sqlite-jdbc-3.40.0.0.jar`)
-
-2. **Project Setup**
-   - Create a `lib` folder in your project
-   - Place the downloaded JAR file in the `lib` folder
+Note: This structure follows Maven conventions. If using a non-Maven project, your structure will be simpler as shown in the VSCode section.
 
 ## NetBeans Integration Guide
 
@@ -383,35 +388,6 @@ If your program connects but queries don't work:
 2. **Verify file corruption**:
    - Open the SQLite file with DB Browser for SQLite
    - If it's corrupted, you may need to recreate it
-
-## Project Structure Overview
-
-For Stage 3, maintain this structure:
-
-```
-project_root/
-  ├── src/
-  │   └── main/
-  │       ├── java/
-  │       │   └── connecttojdbc/
-  │       │       ├── DBConnect.java
-  │       │       ├── DBCommand.java
-  │       │       ├── DBOutputFormatter.java
-  │       │       └── Main.java
-  │       └── resources/
-  │           ├── db/
-  │           │   └── database.sqlite
-  │           ├── sql/
-  │           │   ├── schema.sql
-  │           │   ├── populate.sql
-  │           │   └── queries.sql
-  │           └── docs/
-  │               └── group_number_GCA_Stage3_Report.pdf
-  ├── pom.xml
-  └── target/
-```
-
-Note: This structure follows Maven conventions. If using a non-Maven project, your structure will be simpler as shown in the VSCode section.
 
 ## Database Conversion Guide
 
