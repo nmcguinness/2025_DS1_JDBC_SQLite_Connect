@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This guide provides instructions for integrating SQLite with your Java application for Stage 3 of the Database Systems Project. It includes setup instructions for both NetBeans and VSCode environments.
+This guide provides step-by-step instructions for integrating SQLite with your Java application for Stage 3 of the Database Systems Project. It includes detailed setup instructions for both NetBeans and VSCode environments, specifically designed for first-year students who are new to Java and database connectivity.
 
 ## Project Requirements
 
@@ -39,38 +39,173 @@ Before connecting to SQLite, you need to add the SQLite JDBC driver to your proj
 
 ## NetBeans Integration Guide
 
+### Creating a New Project in NetBeans
+
+1. **Launch NetBeans IDE**
+   - Open NetBeans from your Start Menu, Desktop, or Applications folder
+
+2. **Create a New Project**
+   - Click on "File" > "New Project" (or use Ctrl+Shift+N)
+   - Select "Java" > "Java Application" 
+   - Click "Next"
+
+3. **Configure Project**
+   - Enter a Project Name (e.g., "SQLiteJDBCProject")
+   - Choose a Project Location (where you want to save the project)
+   - Make sure to uncheck "Create Main Class" (we'll create this ourselves)
+   - Click "Finish"
+
+### Creating the Package and Java Files
+
+1. **Create a Package**
+   - Right-click on "Source Packages" in your project
+   - Select "New" > "Java Package"
+   - Name the package `connecttojdbc`
+   - Click "Finish"
+
+2. **Create Java Classes**
+   - Right-click on the `connecttojdbc` package
+   - Select "New" > "Java Class"
+   - Enter the class name (e.g., "DBConnect")
+   - Repeat for "DBCommand", "DBOutputFormatter", and "Main"
+   - For each class, copy and paste the code from the provided files
+
+3. **Create Project Folders**
+   - Right-click on your project name
+   - Select "New" > "Folder"
+   - Create folders named `db`, `sql`, and `docs`
+
 ### Adding the Driver to NetBeans
 
-1. Right-click on your project in the Projects window
-2. Select "Properties"
-3. Go to "Libraries" > "Compile" tab
-4. Click "Add JAR/Folder" and locate the downloaded SQLite JDBC driver JAR file
-5. Click "Open" and then "OK"
+1. **Download the SQLite JDBC Driver**
+   - Visit the [SQLite JDBC GitHub releases page](https://github.com/xerial/sqlite-jdbc/releases)
+   - Download the latest JAR file (e.g., `sqlite-jdbc-3.40.0.0.jar`)
 
-### Testing in NetBeans
+2. **Add Driver to Project**
+   - Right-click on your project in the Projects window
+   - Select "Properties"
+   - Go to "Libraries" > "Compile" tab
+   - Click "Add JAR/Folder" and locate the downloaded SQLite JDBC driver JAR file
+   - Click "Open" and then "OK"
+
+#### Testing in NetBeans
 
 To verify your SQLite connection in NetBeans:
 
-1. Create a test method that attempts to connect to your database
-2. Run in debug mode to check for any connection errors
-3. Use the `displayDatabaseSchema()` method in `DBCommand.java` to verify schema
+1. **Create a test method**:
+   ```java
+   private boolean testConnection() {
+       Connection testConn = null;
+       try {
+           System.out.println("Testing SQLite connection...");
+           testConn = DBConnect.connect(dbFilePath);
+           
+           if (testConn != null) {
+               System.out.println("Connection successful!");
+               
+               // Display the SQLite version
+               ResultSet rs = DBCommand.executeQuery(testConn, "SELECT sqlite_version()");
+               if (rs.next()) {
+                   System.out.println("SQLite Version: " + rs.getString(1));
+               }
+               
+               // Display database schema
+               DBCommand.displayDatabaseSchema(testConn);
+               return true;
+           }
+       } catch (Exception e) {
+           System.err.println("Test connection failed: " + e.getMessage());
+       } finally {
+           if (testConn != null) {
+               DBConnect.disconnect(testConn);
+           }
+       }
+       return false;
+   }
+   ```
+
+2. **Call the test method**:
+   ```java
+   if (!testConnection()) {
+       System.err.println("Database connection test failed. Please check your setup.");
+       return;
+   }
+   ```
+
+3. **Run in debug mode**:
+   - Set a breakpoint in your test method
+   - Right-click the project and select "Debug"
+   - Watch the Variables window to examine connection objects
 
 ## VSCode Integration Guide
 
-### Required Extensions
+### Installing VSCode and Extensions
 
-Install the following VSCode extensions:
+1. **Download and Install VSCode**
+   - Visit [https://code.visualstudio.com/](https://code.visualstudio.com/)
+   - Download the appropriate version for your operating system
+   - Follow the installation instructions
 
-1. **Extension Pack for Java** by Microsoft
-2. **SQLite** by alexcvzz
-3. **SQLite Viewer** by Florian Klampfer
+2. **Install Required Extensions**
+   - Open VSCode
+   - Click on the Extensions icon in the sidebar (or press Ctrl+Shift+X)
+   - Search for and install:
+     - "Extension Pack for Java" by Microsoft
+     - "SQLite" by alexcvzz
+     - "SQLite Viewer" by Florian Klampfer
+
+### Creating a New Java Project in VSCode
+
+1. **Open VSCode**
+   - Launch VSCode from your Start Menu, Desktop, or Applications folder
+
+2. **Create a New Java Project**
+   - Press Ctrl+Shift+P to open the Command Palette
+   - Type "Java: Create Java Project" and select it
+   - Select "No build tools" for a simple project
+   - Choose a location for your project
+   - Enter a project name (e.g., "SQLiteJDBCProject")
+
+3. **Create the Package Structure**
+   - Open the Explorer view (Ctrl+Shift+E)
+   - Navigate to the `src` folder
+   - Right-click on the `src` folder and select "New Folder"
+   - Create a folder named `connecttojdbc`
+
+4. **Create Java Files**
+   - Right-click on the `connecttojdbc` folder
+   - Select "New File"
+   - Create files named:
+     - `DBConnect.java`
+     - `DBCommand.java`
+     - `DBOutputFormatter.java`
+     - `Main.java`
+   - Copy and paste the provided code into each file
+
+5. **Create Project Folders**
+   - Right-click on your project root in Explorer
+   - Select "New Folder"
+   - Create folders named:
+     - `db` (for your SQLite database file)
+     - `sql` (for your SQL scripts)
+     - `docs` (for your documentation)
+     - `lib` (for the JDBC driver)
 
 ### Adding the Driver to VSCode
 
-1. Create a `lib` folder in your project root
-2. Copy the downloaded JAR file to the `lib` folder
-3. Right-click on the JAR file in VSCode Explorer
-4. Select "Add to Java Build Path"
+1. **Download the SQLite JDBC Driver**
+   - Visit the [SQLite JDBC GitHub releases page](https://github.com/xerial/sqlite-jdbc/releases)
+   - Download the latest JAR file (e.g., `sqlite-jdbc-3.40.0.0.jar`)
+
+2. **Add the Driver to Your Project**
+   - Copy the downloaded JAR file to the `lib` folder in your project
+   - Right-click on the JAR file in the VSCode Explorer
+   - Select "Add to Java Build Path"
+
+3. **Verify the Reference Library**
+   - Check the Java Projects panel in VSCode
+   - Expand your project > "Referenced Libraries"
+   - You should see the SQLite JDBC JAR file listed there
 
 ### Using SQLite Viewer in VSCode
 
@@ -80,18 +215,28 @@ Install the following VSCode extensions:
 4. Click on the file to open it
 5. Click on "New Query" to write and execute SQL queries directly
 
-```mermaid
-flowchart LR
-    A[Open SQLite Viewer] --> B[Click Open Database]
-    B --> C[Select database.sqlite]
-    C --> D[Database opens in explorer]
-    D --> E[Click New Query]
-    E --> F[Write SQL query]
-    F --> G[Run query]
-    G --> H[View results]
-```
-
 ## Working with SQLite in Java
+
+### Understanding the Java Files
+
+The project includes four main Java files:
+
+1. **DBConnect.java** - Manages database connections
+   - Contains methods to connect to and disconnect from the SQLite database
+   - Handles JDBC driver loading and connection creation
+
+2. **DBCommand.java** - Executes SQL queries
+   - Provides methods to run SELECT and UPDATE queries
+   - Includes support for prepared statements
+   - Contains a method to display the database schema
+
+3. **DBOutputFormatter.java** - Formats query results
+   - Displays query results in a readable format
+   - Includes specialized formatters for different query types
+
+4. **Main.java** - The entry point for your application
+   - Contains the main method to start your program
+   - Demonstrates how to connect to the database and run queries
 
 ### Connection Best Practices
 
@@ -126,9 +271,10 @@ When connecting to SQLite, follow these best practices:
 
 ### Using Prepared Statements
 
-For parameterized queries, use prepared statements for better security and performance:
+For queries with user input, use prepared statements for better security and performance:
 
 ```java
+// This is safer than building SQL strings with user input
 String query = "SELECT * FROM Games WHERE Genre = ? AND ReleaseDate > ?";
 Object[] params = {"Action", "2020-01-01"};
 ResultSet resultSet = DBCommand.executePreparedQuery(conn, query, params);
@@ -140,40 +286,90 @@ The `DBOutputFormatter` class provides methods for displaying different types of
 
 - `showAllGames()` - For displaying games table data
 - `showAllScores()` - For displaying player scores data
-- `showGenericQueryResult()` - For generic query results
+- `showGenericQueryResult()` - For any type of query result
 - `showAggregationResults()` - For GROUP BY queries
 - `showSubqueryResults()` - For subquery results
 - `showCaseStatementResults()` - For queries with CASE statements
 - `showCTEResults()` - For Common Table Expression queries
 - `showViewResults()` - For queries against views
 
+### Running Your First Query
+
+Here's a simple example of how to run a query:
+
+```java
+// Connect to the database
+Connection conn = DBConnect.connect("db/database.sqlite");
+
+// Execute a simple query
+String query = "SELECT * FROM Games";
+ResultSet resultSet = DBCommand.executeQuery(conn, query);
+
+// Display the results
+DBOutputFormatter.showAllGames("All Games", resultSet);
+
+// Close the connection
+DBConnect.disconnect(conn);
+```
+
 ## Common Issues and Solutions
 
 ### Database File Not Found
 
-If you get "Database file not found" errors:
+If you see "Database file not found" errors:
 
-1. Check the file path in your code
-2. Print the working directory to debug path issues:
-   ```java
-   System.out.println("Working directory: " + System.getProperty("user.dir"));
-   ```
-3. Try using an absolute path
+1. **Verify the database file exists**:
+   - Check that your `database.sqlite` file is in the `db` folder
+   - Make sure the filename matches exactly (SQLite is case-sensitive)
+
+2. **Check the file path**:
+   - Print the working directory to debug path issues:
+     ```java
+     System.out.println("Working directory: " + System.getProperty("user.dir"));
+     ```
+   - Try using the absolute path helper method:
+     ```java
+     String absolutePath = DBConnect.getAbsolutePath("db/database.sqlite");
+     conn = DBConnect.connect(absolutePath);
+     ```
+
+3. **Create the database file if it doesn't exist**:
+   - If you're starting from scratch, make sure your code creates the database file
+   - Verify file permissions (make sure you have write access to the folder)
 
 ### Driver Not Found
 
-If you get "ClassNotFoundException: org.sqlite.JDBC":
+If you see "ClassNotFoundException: org.sqlite.JDBC":
 
-1. Verify the SQLite JDBC JAR is in your project's classpath
-2. Check if the JAR file is corrupted (try downloading again)
+1. **Check the JDBC driver**:
+   - Verify the SQLite JDBC JAR is added to your project
+   - In NetBeans: Right-click project > Properties > Libraries > Compile
+   - In VSCode: Check Referenced Libraries in Java Projects view
 
-### SQL Syntax Errors
+2. **Troubleshoot the driver**:
+   - Try downloading the JAR file again
+   - Use a specific version (e.g., sqlite-jdbc-3.36.0.3.jar)
+   - Add a simple test to verify driver loading:
+     ```java
+     try {
+         Class.forName("org.sqlite.JDBC");
+         System.out.println("Driver loaded successfully!");
+     } catch (ClassNotFoundException e) {
+         System.err.println("Driver not found: " + e.getMessage());
+     }
+     ```
 
-SQLite has some syntax differences from MySQL:
+### Connection Issues
 
-1. SQLite doesn't support all MySQL functions
-2. Date formats may be different
-3. AUTO_INCREMENT is replaced with AUTOINCREMENT in SQLite
+If your program connects but queries don't work:
+
+1. **Check database schema**:
+   - Use the `displayDatabaseSchema()` method to verify tables exist
+   - Compare table and column names (case-sensitive)
+
+2. **Verify file corruption**:
+   - Open the SQLite file with DB Browser for SQLite
+   - If it's corrupted, you may need to recreate it
 
 ## Project Structure Overview
 
@@ -212,24 +408,26 @@ After creating your database in PHPMyAdmin:
 
 1. **Export from PHPMyAdmin**
    - Open your database in PHPMyAdmin
-   - Click on "Export" tab
+   - Click on the "Export" tab
    - Choose "Quick" export method
    - Select "SQL" format
    - Click "Export" and download the `.sql` file
+
+   ![PHPMyAdmin Export](https://i.imgur.com/1r34eif.png)
 
 2. **Convert to SQLite**
    - Use an online converter: [https://www.rebasedata.com/convert-mysql-to-sqlite-online](https://www.rebasedata.com/convert-mysql-to-sqlite-online)
    - Upload your MySQL `.sql` file
    - Download the converted `.sqlite` file
 
+   ![SQLite Conversion](https://i.imgur.com/WQ8jXbF.png)
+
 3. **Test the Converted Database**
-   - Use DB Browser for SQLite or VSCode SQLite Viewer to inspect the database
-   - Verify all tables and data are correctly converted
-   - Run a few test queries to ensure functionality
+   - Download and install [DB Browser for SQLite](https://sqlitebrowser.org/dl/) if you don't have it
+   - Open the `.sqlite` file with DB Browser for SQLite
+   - Check the "Database Structure" tab to verify tables exist
+   - Go to the "Browse Data" tab to verify data was imported correctly
+   - Try running some test queries in the "Execute SQL" tab
 
-### SQLite Data Type Considerations
+   ![DB Browser for SQLite](https://i.imgur.com/CSLEbRN.png)
 
-Be aware of SQLite's dynamic typing system:
-- SQLite uses a type affinity system rather than strict data types
-- TEXT in SQLite can store dates (use proper formatting in queries)
-- INTEGER PRIMARY KEY columns automatically become rowid aliases
