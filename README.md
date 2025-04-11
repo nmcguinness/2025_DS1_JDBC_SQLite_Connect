@@ -289,14 +289,10 @@ After creating your database in PHPMyAdmin:
    - Select "SQL" format
    - Click "Export" and download the `.sql` file
 
-   ![PHPMyAdmin Export](https://i.imgur.com/1r34eif.png)
-
 2. **Convert to SQLite**
    - Use an online converter: [https://www.rebasedata.com/convert-mysql-to-sqlite-online](https://www.rebasedata.com/convert-mysql-to-sqlite-online)
    - Upload your MySQL `.sql` file
    - Download the converted `.sqlite` file
-
-   ![SQLite Conversion](https://i.imgur.com/WQ8jXbF.png)
 
 3. **Test the Converted Database**
    - Download and install [DB Browser for SQLite](https://sqlitebrowser.org/dl/) if you don't have it
@@ -304,5 +300,3 @@ After creating your database in PHPMyAdmin:
    - Check the "Database Structure" tab to verify tables exist
    - Go to the "Browse Data" tab to verify data was imported correctly
    - Try running some test queries in the "Execute SQL" tab
-
-   ![DB Browser for SQLite](https://i.imgur.com/CSLEbRN.png)
