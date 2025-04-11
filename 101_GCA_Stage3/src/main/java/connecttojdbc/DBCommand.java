@@ -1,4 +1,4 @@
-package connecttojdbc;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +10,8 @@ import java.sql.Date;
 
 /**
  * This class is used to execute SQL queries and updates on the SQLite database
- * @author Your Name
- * @since DD/MM/YYYY
+ * @author NMCG
+ * @since 09/04/2025
  * @see DBConnect
  */
 public class DBCommand {
@@ -128,44 +128,4 @@ public class DBCommand {
         return result;
     }
     
-    /**
-     * This method displays the schema of the SQLite database
-     * @param conn Connection object
-     */
-    public static void displayDatabaseSchema(Connection conn) {
-        try {
-            // Get a list of all tables
-            ResultSet tables = conn.getMetaData().getTables(null, null, "%", new String[]{"TABLE"});
-            System.out.println("\n===== DATABASE SCHEMA =====");
-            
-            while (tables.next()) {
-                String tableName = tables.getString("TABLE_NAME");
-                // Skip sqlite_sequence table (internal SQLite table)
-                if (tableName.equals("sqlite_sequence")) continue;
-                
-                System.out.println("\nTABLE: " + tableName);
-                System.out.println("---------------------");
-                
-                // Get columns for the current table
-                ResultSet columns = conn.getMetaData().getColumns(null, null, tableName, "%");
-                System.out.println("Column Name\t\tData Type\t\tNullable");
-                System.out.println("-----------\t\t---------\t\t--------");
-                
-                while (columns.next()) {
-                    String columnName = columns.getString("COLUMN_NAME");
-                    String dataType = columns.getString("TYPE_NAME");
-                    String nullable = columns.getInt("NULLABLE") == 0 ? "NOT NULL" : "NULL";
-                    
-                    System.out.printf("%-20s\t%-20s\t%s%n", columnName, dataType, nullable);
-                }
-                
-                columns.close();
-            }
-            
-            tables.close();
-            System.out.println("\n==========================");
-        } catch (SQLException e) {
-            System.err.println("Error displaying schema: " + e.getMessage());
-        }
-    }
 }

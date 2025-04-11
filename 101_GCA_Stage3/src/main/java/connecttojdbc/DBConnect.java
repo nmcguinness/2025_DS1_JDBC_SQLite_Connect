@@ -1,15 +1,13 @@
-package connecttojdbc;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class is used to connect and disconnect from an SQLite database
- * @author Your Name
- * @since DD/MM/YYYY
+ * @author NMCG
+ * @since 09/04/2025
  * @see DBCommand
  */
 public class DBConnect {

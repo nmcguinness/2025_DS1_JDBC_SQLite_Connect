@@ -40,7 +40,19 @@ project_root/
   └── target/
 ```
 
-Note: This structure follows Maven conventions. If using a non-Maven project, your structure will be simpler as shown in the VSCode section.
+Note: This structure follows Maven conventions. 
+
+## Using the Sample Project
+
+- Download or clone this sample project.
+- The Java code is ready to connect to `sample_database.sqlite` located in `src/main/resources/db/`.
+- Use this structure to build your own project.
+- You **must replace** the following:
+  - `sample_database.sqlite` → with your own SQLite DB (converted from your MySQL design)
+  - SQL scripts in `sql/` → your own `schema.sql`, `populate.sql`, and `queries.sql`
+  - Report PDF → your `group_number_GCA_Stage3_Report.pdf`
+
+Do **not** submit the default sample DB or sample queries. Your submission will be evaluated based on your own SQL schema, query design, and ER modeling.
 
 ## NetBeans Integration Guide
 
@@ -132,133 +144,6 @@ Note: This structure follows Maven conventions. If using a non-Maven project, yo
    - This step is crucial to avoid the "Error: Could not find or load main class" error
    - The Output window should show "BUILD SUCCESS" when complete
 
-### Testing in NetBeans
-
-To verify your SQLite connection in NetBeans:
-
-1. **Create a test method**:
-   ```java
-   private boolean testConnection() {
-       Connection testConn = null;
-       try {
-           System.out.println("Testing SQLite connection...");
-           testConn = DBConnect.connect(dbFilePath);
-           
-           if (testConn != null) {
-               System.out.println("Connection successful!");
-               
-               // Display the SQLite version
-               ResultSet rs = DBCommand.executeQuery(testConn, "SELECT sqlite_version()");
-               if (rs.next()) {
-                   System.out.println("SQLite Version: " + rs.getString(1));
-               }
-               
-               // Display database schema
-               DBCommand.displayDatabaseSchema(testConn);
-               return true;
-           }
-       } catch (Exception e) {
-           System.err.println("Test connection failed: " + e.getMessage());
-       } finally {
-           if (testConn != null) {
-               DBConnect.disconnect(testConn);
-           }
-       }
-       return false;
-   }
-   ```
-
-2. **Call the test method**:
-   ```java
-   if (!testConnection()) {
-       System.err.println("Database connection test failed. Please check your setup.");
-       return;
-   }
-   ```
-
-3. **Run in debug mode**:
-   - Set a breakpoint in your test method
-   - Right-click the project and select "Debug"
-   - Watch the Variables window to examine connection objects
-
-## VSCode Integration Guide
-
-### Installing VSCode and Extensions
-
-1. **Download and Install VSCode**
-   - Visit [https://code.visualstudio.com/](https://code.visualstudio.com/)
-   - Download the appropriate version for your operating system
-   - Follow the installation instructions
-
-2. **Install Required Extensions**
-   - Open VSCode
-   - Click on the Extensions icon in the sidebar (or press Ctrl+Shift+X)
-   - Search for and install:
-     - "Extension Pack for Java" by Microsoft
-     - "SQLite" by alexcvzz
-     - "SQLite Viewer" by Florian Klampfer
-
-### Creating a New Java Project in VSCode
-
-1. **Open VSCode**
-   - Launch VSCode from your Start Menu, Desktop, or Applications folder
-
-2. **Create a New Java Project**
-   - Press Ctrl+Shift+P to open the Command Palette
-   - Type "Java: Create Java Project" and select it
-   - Select "No build tools" for a simple project
-   - Choose a location for your project
-   - Enter a project name (e.g., "DBS1_GCA_Stage3")
-
-3. **Create the Package Structure**
-   - Open the Explorer view (Ctrl+Shift+E)
-   - Navigate to the `src` folder
-   - Right-click on the `src` folder and select "New Folder"
-   - Create a folder named `connecttojdbc`
-
-4. **Create Java Files**
-   - Right-click on the `connecttojdbc` folder
-   - Select "New File"
-   - Create files named:
-     - `DBConnect.java`
-     - `DBCommand.java`
-     - `DBOutputFormatter.java`
-     - `Main.java`
-   - Copy and paste the provided code into each file
-
-5. **Create Project Folders**
-   - Right-click on your project root in Explorer
-   - Select "New Folder"
-   - Create folders named:
-     - `db` (for your SQLite database file)
-     - `sql` (for your SQL scripts)
-     - `docs` (for your documentation)
-     - `lib` (for the JDBC driver)
-
-### Adding the Driver to VSCode
-
-1. **Download the SQLite JDBC Driver**
-   - Visit the [SQLite JDBC GitHub releases page](https://github.com/xerial/sqlite-jdbc/releases)
-   - Download the latest JAR file (e.g., `sqlite-jdbc-3.40.0.0.jar`)
-
-2. **Add the Driver to Your Project**
-   - Copy the downloaded JAR file to the `lib` folder in your project
-   - Right-click on the JAR file in the VSCode Explorer
-   - Select "Add to Java Build Path"
-
-3. **Verify the Reference Library**
-   - Check the Java Projects panel in VSCode
-   - Expand your project > "Referenced Libraries"
-   - You should see the SQLite JDBC JAR file listed there
-
-### Using SQLite Viewer in VSCode
-
-1. Open the SQLite Viewer extension
-2. Click "Open Database"
-3. Navigate to your `database.sqlite` file
-4. Click on the file to open it
-5. Click on "New Query" to write and execute SQL queries directly
-
 ## Working with SQLite in Java
 
 ### Understanding the Java Files
@@ -282,37 +167,6 @@ The project includes four main Java files:
    - Contains the main method to start your program
    - Demonstrates how to connect to the database and run queries
 
-### Connection Best Practices
-
-When connecting to SQLite, follow these best practices:
-
-1. **Check for driver availability before connecting**
-   ```java
-   if (!DBConnect.isSQLiteDriverAvailable()) {
-       System.err.println("SQLite JDBC driver not available.");
-       return;
-   }
-   ```
-
-2. **Use both relative and absolute paths**
-   ```java
-   // Try relative path first
-   conn = DBConnect.connect(dbFilePath);
-   if (conn == null) {
-       // Fall back to absolute path
-       conn = DBConnect.connect(DBConnect.getAbsolutePath(dbFilePath));
-   }
-   ```
-
-3. **Always close connections in a finally block**
-   ```java
-   try {
-       // Execute queries
-   } finally {
-       DBConnect.disconnect(conn);
-   }
-   ```
-
 ### Using Prepared Statements
 
 For queries with user input, use prepared statements for better security and performance:
@@ -329,7 +183,6 @@ ResultSet resultSet = DBCommand.executePreparedQuery(conn, query, params);
 The `DBOutputFormatter` class provides methods for displaying different types of query results:
 
 - `showAllGames()` - For displaying games table data
-- `showAllScores()` - For displaying player scores data
 - `showGenericQueryResult()` - For any type of query result
 - `showAggregationResults()` - For GROUP BY queries
 - `showSubqueryResults()` - For subquery results
@@ -343,7 +196,7 @@ Here's a simple example of how to run a query:
 
 ```java
 // Connect to the database
-Connection conn = DBConnect.connect("db/database.sqlite");
+Connection conn = DBConnect.connect("src/main/resources/db/sample_database.sqlite");
 
 // Execute a simple query
 String query = "SELECT * FROM Games";
@@ -415,47 +268,13 @@ If you see "Database file not found" errors:
      ```
    - Try using the absolute path helper method:
      ```java
-     String absolutePath = DBConnect.getAbsolutePath("db/database.sqlite");
+     String absolutePath = DBConnect.getAbsolutePath("src/main/resources/db/database.sqlite");
      conn = DBConnect.connect(absolutePath);
      ```
 
 3. **Create the database file if it doesn't exist**:
    - If you're starting from scratch, make sure your code creates the database file
    - Verify file permissions (make sure you have write access to the folder)
-
-### Driver Not Found
-
-If you see "ClassNotFoundException: org.sqlite.JDBC":
-
-1. **Check the JDBC driver**:
-   - Verify the SQLite JDBC JAR is added to your project
-   - In NetBeans: Right-click project > Properties > Libraries > Compile
-   - In VSCode: Check Referenced Libraries in Java Projects view
-
-2. **Troubleshoot the driver**:
-   - Try downloading the JAR file again
-   - Use a specific version (e.g., sqlite-jdbc-3.36.0.3.jar)
-   - Add a simple test to verify driver loading:
-     ```java
-     try {
-         Class.forName("org.sqlite.JDBC");
-         System.out.println("Driver loaded successfully!");
-     } catch (ClassNotFoundException e) {
-         System.err.println("Driver not found: " + e.getMessage());
-     }
-     ```
-
-### Connection Issues
-
-If your program connects but queries don't work:
-
-1. **Check database schema**:
-   - Use the `displayDatabaseSchema()` method to verify tables exist
-   - Compare table and column names (case-sensitive)
-
-2. **Verify file corruption**:
-   - Open the SQLite file with DB Browser for SQLite
-   - If it's corrupted, you may need to recreate it
 
 ## Database Conversion Guide
 

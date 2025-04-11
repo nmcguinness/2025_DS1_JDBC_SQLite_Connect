@@ -1,110 +1,16 @@
-package connecttojdbc;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 /**
  * This class is used to format and output the result of each query run on the database.
- * @author Your Name
- * @since DD/MM/YYYY
+ * @author NMCG
+ * @since 09/04/2025
  * @see Main
  */
 public class DBOutputFormatter {
-    
-    /**
-     * This method is used to show the output of the query "SELECT * FROM games"
-     * @param title String title for the output
-     * @param resultSet ResultSet object containing query results
-     * @return int row count, or -1 if no results
-     */
-    public static int showAllGames(String title, ResultSet resultSet) {
-        if(resultSet == null) {
-            System.out.println("No results were returned!");
-            return -1;
-        }
-        
-        int rowCount = 0;
-
-        //print header
-        System.out.println("");
-        System.out.println(title);  
-        System.out.println("");
-        System.out.println("Game ID\t\t\tGame Name\t\tRelease Date\t\t\tGenre");
-        System.out.println("-------\t\t\t---------\t\t------------\t\t\t-----");
-        
-        //print results
-        try {
-            while(resultSet.next()) {
-                rowCount++;
-                
-                System.out.print(resultSet.getInt("GameID"));
-                System.out.print("\t\t\t");
-                
-                System.out.print(resultSet.getString("GameName"));
-                System.out.print("\t\t");
-                
-                System.out.print(resultSet.getDate("ReleaseDate"));
-                System.out.print("\t\t\t");
-                
-                System.out.print(resultSet.getString("Genre"));
-                System.out.print("\n");
-            }
-            
-            System.out.println("\nTotal rows: " + rowCount);
-        }
-        catch(SQLException e) {
-            System.err.println("Error displaying games: " + e.getMessage());
-        }
-        
-        //return the number of rows output
-        return rowCount;
-    }
-
-    /**
-     * This method is used to show the output of the query "SELECT * FROM scores"
-     * @param title String title for the output
-     * @param resultSet ResultSet object containing query results
-     * @return int row count, or -1 if no results
-     */
-    public static int showAllScores(String title, ResultSet resultSet) {
-        if(resultSet == null) {
-            System.out.println("No results were returned!");
-            return -1;
-        }
-        
-        int rowCount = 0;
-
-        //print header
-        System.out.println("");
-        System.out.println(title);
-        System.out.println("");
-        System.out.println("FirstName\tScore\t\tGameName");
-        System.out.println("---------\t-----\t\t------");
-        
-        //print results
-        try {
-            while(resultSet.next()) {
-                rowCount++;
-                
-                System.out.print(resultSet.getString("FirstName"));
-                System.out.print("\t\t");
-                
-                System.out.print(resultSet.getInt("Score"));
-                System.out.print("\t\t");
-                
-                System.out.print(resultSet.getString("GameName"));
-                System.out.print("\n");
-            }
-            
-            System.out.println("\nTotal rows: " + rowCount);
-        }
-        catch(SQLException e) {
-            System.err.println("Error displaying scores: " + e.getMessage());
-        }
-        
-        //return the number of rows output
-        return rowCount;
-    }
+      
 
     /**
      * Generic method to display any query result in a tabular format
@@ -161,6 +67,55 @@ public class DBOutputFormatter {
             System.err.println("Error displaying query results: " + e.getMessage());
         }
         
+        return rowCount;
+    }
+    
+        /**
+     * This method is used to show the output of the query "SELECT * FROM games"
+     * @param title String title for the output
+     * @param resultSet ResultSet object containing query results
+     * @return int row count, or -1 if no results
+     */
+    public static int showAllGames(String title, ResultSet resultSet) {
+        if(resultSet == null) {
+            System.out.println("No results were returned!");
+            return -1;
+        }
+        
+        int rowCount = 0;
+
+        //print header
+        System.out.println("");
+        System.out.println(title);  
+        System.out.println("");
+        System.out.println("Game ID\t\t\tGame Name\t\tRelease Date\t\t\tGenre");
+        System.out.println("-------\t\t\t---------\t\t------------\t\t\t-----");
+        
+        //print results
+        try {
+            while(resultSet.next()) {
+                rowCount++;
+                
+                System.out.print(resultSet.getInt("GameID"));
+                System.out.print("\t\t\t");
+                
+                System.out.print(resultSet.getString("GameName"));
+                System.out.print("\t\t");
+                
+                System.out.print(resultSet.getDate("ReleaseDate"));
+                System.out.print("\t\t\t");
+                
+                System.out.print(resultSet.getString("Genre"));
+                System.out.print("\n");
+            }
+            
+            System.out.println("\nTotal rows: " + rowCount);
+        }
+        catch(SQLException e) {
+            System.err.println("Error displaying games: " + e.getMessage());
+        }
+        
+        //return the number of rows output
         return rowCount;
     }
     
